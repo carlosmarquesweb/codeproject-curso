@@ -35,7 +35,11 @@ class ClientController extends Controller
 
     public function update(Request $request, $id)
     {
-        return Client::where('id',$id)->update($request->all());
+        $client = Client::where('id',$id)->update($request->all());
+        if($client){
+            return json_encode($request->all());
+        }
+        return 'Erro ao atualizar o cliente.';
     }
 
     public function destroy($id)
