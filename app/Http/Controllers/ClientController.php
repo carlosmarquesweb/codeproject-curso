@@ -15,7 +15,7 @@ class ClientController extends Controller
 
     public function create()
     {
-        //
+        // Form
     }
 
     public function store(Request $request)
@@ -30,7 +30,7 @@ class ClientController extends Controller
 
     public function edit($id)
     {
-        //
+        // Form
     }
 
     public function update(Request $request, $id)
