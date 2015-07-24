@@ -2,26 +2,26 @@
 
 namespace CodeProject\Http\Controllers;
 
-use CodeProject\Repositories\ClientInterface;
-use CodeProject\Services\ClientService;
+use CodeProject\Repositories\ProjectInterface;
+use CodeProject\Services\ProjectService;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class ProjectController extends Controller
 {
     /**
-     * @var ClientInterface
+     * @var ProjectInterface
      */
     private $repository;
     /**
-     * @var ClientService
+     * @var ProjectService
      */
     private $service;
 
     /**
-     * @param ClientInterface $repository
-     * @param ClientService $service
+     * @param ProjectInterface $repository
+     * @param ProjectService $service
      */
-    public function __construct(ClientInterface $repository,ClientService $service)
+    public function __construct(ProjectInterface $repository,ProjectService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -30,7 +30,7 @@ class ClientController extends Controller
     public function index()
     {
         //return $this->repository->all();
-        return $this->repository->with(['projects'])->all();
+        return $this->repository->with(['owner','client'])->all();
     }
 
     public function create()
@@ -46,7 +46,7 @@ class ClientController extends Controller
     public function show($id)
     {
         //return $this->repository->find($id);
-        return $this->repository->with(['projects'])->find($id);
+        return $this->repository->with(['owner','client'])->find($id);
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class ClientController extends Controller
         // Form
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
         return $this->service->update($request->all(),$id);
     }
