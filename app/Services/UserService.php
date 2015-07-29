@@ -2,22 +2,22 @@
 
 namespace CodeProject\Services;
 
-use CodeProject\Repositories\ClientInterface;
-use CodeProject\Validators\ClientValidator;
+use CodeProject\Repositories\UserInterface;
+use CodeProject\Validators\UserValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 
-class ClientService
+class UserService
 {
     /**
-     * @var ClientInterface
+     * @var UserInterface
      */
     protected $repository;
     /**
-     * @var ClientValidator
+     * @var UserValidator
      */
     protected $validator;
 
-    public function __construct(ClientInterface $repository,ClientValidator $validator)
+    public function __construct(UserInterface $repository,UserValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;
@@ -53,7 +53,7 @@ class ClientService
     {
         try{
             $this->validator->with($data)->passesOrFail();
-            return $this->repository->update($data,$id);
+            return $this->repository->destroy($data,$id);
         }catch(ValidatorException $e){
             return[
                 'error' => true,
