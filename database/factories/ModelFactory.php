@@ -19,3 +19,15 @@ $factory->define(CodeProject\Entities\Client::class, function ($faker) {
         'obs' => $faker->sentence,
     ];
 });
+
+$factory->define(CodeProject\Entities\Project::class, function ($faker) {
+    return [
+        'owner_id' => rand(1,5),
+        'client_id' => rand(1,5),
+        'name' => $faker->company,
+        'description' => $faker->sentence,
+        'progress' => $faker->sentence,
+        'status' => 'teste',
+        'due_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
+    ];
+});
