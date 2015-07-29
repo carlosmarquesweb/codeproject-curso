@@ -27,25 +27,28 @@ class UserService
     {
         try{
             $this->validator->with($data)->passesOrFail();
-            return $this->repository->create($data);
+            return response()->json($this->repository->create($data));
         }catch(ValidatorException $e){
-            return[
+            return response()->json([
                 'error' => true,
                 'message' => $e->getMessageBag()
-            ];
+            ],412);
         }
     }
 
     public function update(array $data,$id)
     {
-        try{
-            $this->validator->with($data)->passesOrFail();
-            return $this->repository->update($data,$id);
-        }catch(ValidatorException $e){
-            return[
+        try {
+            //$this->validator->with($data)->passesOrFail();
+            $this->validator->with($data)->setId($id)->passesOrFail();
+            return response()->json($this->repository->update($data,$id));
+        } catch(ValidatorException $e) {
+            return response()->json([
                 'error' => true,
                 'message' => $e->getMessageBag()
-            ];
+            ],412);
+        } catch(ModelNotFoundException $e) {
+            return $this->returnNotFoundError($id);
         }
     }
 
